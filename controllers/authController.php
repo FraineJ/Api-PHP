@@ -13,7 +13,7 @@ class AuthController{
         
         $user = json_decode($usuarioModel->findAllOption(["user"=>$user,"pass"=>$pass],["AND"]));
         
-
+        
 
         
         if($user != null){
@@ -26,7 +26,9 @@ class AuthController{
             
 
             $data_token = ["id"=>$user[0]->id,"id_empresa"=>$user[0]->id_empresa,"tipo_user"=>$user[0]->tipo_user];
+            
             header("Authorization: bearer ".TokenMiddleware::generarToken($data_token));
+            
             $res = ["status"=>200,"user"=>$user[0],"menu"=>$menu];
             
             return json_encode($res);

@@ -35,15 +35,17 @@ function IniciarSesion() {
     console.log(gsUrlApi+"auth");
     fetch(gsUrlApi+"auth",{
         method: 'POST',
-        
+        mode: 'cors',
         body: formData
     })
     .then(res=>{
-        console.log(" headers token ", res.headers.get('Authorization'));
-        return res.json()
+        for(var k of res.headers.keys()){
+            console.log(k);
+        }
+        console.log(res.headers.get('Authorization'));
+        return res.json();
     })
     .then(res=>{
-
         
         var objUsuario = res;
         localStorage.setItem('Sesion',  JSON.stringify(objUsuario));
