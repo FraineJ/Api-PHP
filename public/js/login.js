@@ -36,13 +36,20 @@ function IniciarSesion() {
     fetch(gsUrlApi+"auth",{
         method: 'POST',
         mode: 'cors',
+        credentials: 'same-origin',
+        headers:{
+            'Accept':'application/json'
+        },
         body: formData
     })
     .then(res=>{
         for(var k of res.headers.keys()){
             console.log(k);
         }
+        
         console.log(res.headers.get('Authorization'));
+        
+        
         return res.json();
     })
     .then(res=>{
