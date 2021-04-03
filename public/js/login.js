@@ -47,8 +47,10 @@ function IniciarSesion() {
             console.log(k);
         }
         
-        console.log(res.headers.get('Authorization'));
-        
+        var token = res.headers.get('Authorization');
+ 
+        var tokenUser = token;
+        localStorage.setItem('Token',  JSON.stringify(tokenUser));
         
         return res.json();
     })
