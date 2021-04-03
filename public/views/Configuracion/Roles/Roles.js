@@ -300,31 +300,85 @@ function seleccionarTodos(objEvento) {
 
 }
 
+
+
+
 function consultarPermisos() {
 
 
 
+    
     var objSesion = JSON.parse(localStorage.getItem('Sesion'));
     if (objSesion == null || objSesion == undefined) {
 
         window.location.replace("Login.html");
         return;
 
-    }
-    else {
+    }else{
 
-        gObjSesion = objSesion;
-      
+        fetch(gsUrlApi+"rol/listar/"+ giIdEmpresa ,{
+            method: 'GET',
         
-        lstDataPermisos = gObjSesion;
+         
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            
+            var lstData = [];
+    
+            for(var i = 0 ; i < res.length ; i++ ){
+    
+                var objData = new Object();
+                objData.IdRol = res[i].id;
+                objData.Nombre = res[i].nombre;
+                objData.Descripcion = res[i].descripcion;
+                lstData.push(objData);
+    
+    
+         
+            }
+    
+            ArmarDataTable(lstData);
+    
+    
+    
+    
+        })
+        .catch(res=>console.log(res));
 
-        for (var i = 0; i < lstDataPermisos.menu.length; i++) {
 
-            lstDataPermisos[i].state = { "opened": true, "selected": lstDataPermisos[i].selected };
 
-        }
-        console.log(lstDataPermisos);
-        inicializarTreePermisos(lstDataPermisos);
+        $.ajax({
+            type: "GET",
+            url: gsUrlApi + "/Roles/ListarPermisos?IdRol=" + sIdRol,
+            headers: gsAutenticacion,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+    
+                if (result.Error) {
+                    ArmarDataTable([]);
+                    mostrarAlertas(result.Mensaje, "error");
+                    return;
+                }
+    
+                lstDataPermisos = JSON.parse(result.sDataPermisos);
+    
+                for (var i = 0; i < lstDataPermisos.length; i++) {
+    
+                    lstDataPermisos[i].state = { "opened": true, "selected": lstDataPermisos[i].selected };
+    
+                }
+    
+                inicializarTreePermisos(lstDataPermisos);
+    
+            },
+            error: function (e) {
+                ArmarDataTable([]);
+                mostrarAlertas("Error en ajax al cargar permisos.", "error");
+            }
+        });
+
     }
 
 

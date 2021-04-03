@@ -4,11 +4,11 @@ var sAmbiente = "DEBUG";
 
 switch (sAmbiente) {
     case "DESARROLLO":
-        gsUrlApi = "http://192.168.1.5/tienda/tienda/";
+        gsUrlApi = "http://localhost:8024/tienda/tienda/";
         break;
     case "PRODUCCION":
-        gsUrlApi = "http://192.168.1.5/apifacturacion";
+        gsUrlApi = "http://localhost:8024/apifacturacion";
         break;
     default:
-        gsUrlApi = "http://192.168.1.5/tienda/tienda/";
+        gsUrlApi = "http://localhost:8024/tienda/tienda/";
 }
