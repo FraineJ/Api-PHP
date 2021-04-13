@@ -1,5 +1,5 @@
 ﻿var gsUrlApi;
-//var gsAutenticacion = { "Authorization": "Basic " + btoa("caminosips:caminos1_xxxx") };
+
 var sAmbiente = "DEBUG";
 
 switch (sAmbiente) {

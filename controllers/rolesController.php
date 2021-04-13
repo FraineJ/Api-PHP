@@ -8,9 +8,10 @@ class RolesController{
     
     public function __construct(){}
 
-    public function findAll(){
+    public function seleccionar($id_rol){
         $rolesModel = new RolesModel();
-        return $rolesModel->findAll();
+        $roles = $rolModel->findAllOption(["id_rol"=>$id_rol]);
+        return   $roles ;
     }
 
     public function listar($id_empresa){

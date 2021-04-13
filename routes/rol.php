@@ -13,11 +13,11 @@ Route::get('/rol/listar/:id',function($id,Request $request){
     echo $rolesController->listar($id);
 });
 
-Route::get('/rol',function(Request $request){
+Route::get('/rol/seleccionar/:id',function(Request $request){
     
 
     $rolesController = new RolesController();
-    echo $rolesController->findAll();
+    echo $rolesController->seleccionar();
 });
 
 Route::post('/rol',function(Request $request){

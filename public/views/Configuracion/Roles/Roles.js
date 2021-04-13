@@ -1,8 +1,9 @@
-var giIdRol = 0;
+var giIdRol = 1;
 var gsNombre = "";
 var gsDescripcion = "";
 var ObjTable = null;
 var giIdEmpresa = obtenerQueryString("id_empresa");
+var giIdRol = obtenerQueryString("id_rol");
 
 inicializarVentana();
 
@@ -280,7 +281,7 @@ function guardar() {
 }
 
 function limpiarFormulario() {
-    giIdRol = 0;
+    giIdRol = 1;
     $("#input_Nombre").val("");
     $("#textarea_Descripcion").val("");
 }
@@ -305,83 +306,31 @@ function seleccionarTodos(objEvento) {
 
 function consultarPermisos() {
 
+    fetch(gsUrlApi+"permiso/lista/"+ giIdRol  ,{
+        method: 'GET',
+    
+     
+    })
+    .then(res=>res.json())
+    .then(res=>{
 
 
-    
-    var objSesion = JSON.parse(localStorage.getItem('Sesion'));
-    if (objSesion == null || objSesion == undefined) {
+        lstDataPermisos = JSON.parse(res);
 
-        window.location.replace("Login.html");
-        return;
+        for (var i = 0; i < lstDataPermisos.length; i++) {
 
-    }else{
+            lstDataPermisos[i].state = { "opened": true, "selected": lstDataPermisos[i].selected };
 
-        fetch(gsUrlApi+"rol/listar/"+ giIdEmpresa ,{
-            method: 'GET',
-        
-         
-        })
-        .then(res=>res.json())
-        .then(res=>{
-            
-            var lstData = [];
-    
-            for(var i = 0 ; i < res.length ; i++ ){
-    
-                var objData = new Object();
-                objData.IdRol = res[i].id;
-                objData.Nombre = res[i].nombre;
-                objData.Descripcion = res[i].descripcion;
-                lstData.push(objData);
-    
-    
-         
-            }
-    
-            ArmarDataTable(lstData);
-    
-    
-    
-    
-        })
-        .catch(res=>console.log(res));
+        }
+
+        inicializarTreePermisos(lstDataPermisos);
 
 
 
-        $.ajax({
-            type: "GET",
-            url: gsUrlApi + "/Roles/ListarPermisos?IdRol=" + sIdRol,
-            headers: gsAutenticacion,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-    
-                if (result.Error) {
-                    ArmarDataTable([]);
-                    mostrarAlertas(result.Mensaje, "error");
-                    return;
-                }
-    
-                lstDataPermisos = JSON.parse(result.sDataPermisos);
-    
-                for (var i = 0; i < lstDataPermisos.length; i++) {
-    
-                    lstDataPermisos[i].state = { "opened": true, "selected": lstDataPermisos[i].selected };
-    
-                }
-    
-                inicializarTreePermisos(lstDataPermisos);
-    
-            },
-            error: function (e) {
-                ArmarDataTable([]);
-                mostrarAlertas("Error en ajax al cargar permisos.", "error");
-            }
-        });
 
-    }
-
-
+    })
+    .catch(res=>console.log(res));
+    
 }
 
 function inicializarTreePermisos(lstData) {
