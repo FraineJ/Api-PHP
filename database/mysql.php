@@ -8,10 +8,10 @@ class MySQL implements Irepository{
 
     private $conexion = null;
     
-    private $host = "localhost";
-    private $name_db = "mitiendadb";
-    private $user = "root";
-    private $pass = "";
+    private $host = "b28vycrwfhpwv4w0ddvg-mysql.services.clever-cloud.com";
+    private $name_db = "b28vycrwfhpwv4w0ddvg";
+    private $user = "u5elsmgjlbf7r6w7";
+    private $pass = "L6cajxDZDuS77E8TLugU";
     private $motor = "mysql";
 
 
