@@ -5,10 +5,10 @@ require_once 'controllers/permisosController.php';
 
 
 
-Route::get('/permiso/listar/:id',function($id,Request $request){
+Route::get('/permiso/listar/:id_rol',function($id_rol,Request $request){
     
-    $permisosController = new RolesController();
-    echo   $permisosController->listar($id);
+    $permisosController = new PermisosController();
+    return   $permisosController->listar($id_rol);
 });
 
 

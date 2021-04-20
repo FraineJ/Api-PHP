@@ -16,9 +16,6 @@ function inicializarVentana() {
 
 function ObtenerDatos() {
     
-    
-        
-
     fetch(gsUrlApi+"rol/listar/"+ giIdEmpresa ,{
         method: 'GET',
     
@@ -36,15 +33,10 @@ function ObtenerDatos() {
             objData.Nombre = res[i].nombre;
             objData.Descripcion = res[i].descripcion;
             lstData.push(objData);
-
-
      
         }
 
         ArmarDataTable(lstData);
-
-
-
 
     })
     .catch(res=>console.log(res));
@@ -110,7 +102,6 @@ $('#table_Lista').on('click', 'tbody tr', function () {
 });
 
 function ConsultarEditar(IdRole, Nombre, Descripcion) {
-
 
     $("#input_Nombre").val(Nombre);
     $("#textarea_Descripcion").val(Descripcion);
@@ -306,7 +297,7 @@ function seleccionarTodos(objEvento) {
 
 function consultarPermisos() {
 
-    fetch(gsUrlApi+"permiso/lista/"+ giIdRol  ,{
+    fetch(gsUrlApi+"permiso/listar/"+ giIdRol  ,{
         method: 'GET',
     
      
@@ -315,7 +306,8 @@ function consultarPermisos() {
     .then(res=>{
 
 
-        lstDataPermisos = JSON.parse(res);
+        lstDataPermisos = res.permiso;
+        console.log(lstDataPermisos);
 
         for (var i = 0; i < lstDataPermisos.length; i++) {
 

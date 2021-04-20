@@ -6,6 +6,7 @@ class PermisosModel extends ModeloGenerico{
 
 
     protected $id;
+    protected $id_rol;
     protected $text;
     protected $icon;
     protected $parent;
@@ -17,6 +18,10 @@ class PermisosModel extends ModeloGenerico{
 
     public function setId($id){
         $this->id = $id;
+    }
+
+    public function setIdRol($id_rol){
+        $this->id_rol = $id_rol;
     }
 
     public function setText($text){
@@ -35,6 +40,10 @@ class PermisosModel extends ModeloGenerico{
         $this->selected = $selected;
     }
 
+
+    public function getIdRol(){
+        return $this->id_rol;
+    }
 
 
     public function getId(){
