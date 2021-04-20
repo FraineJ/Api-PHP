@@ -25,5 +25,10 @@ class ProductoController{
         $productoModel = new ProductoModel();
         return $productoModel->updateOption($obj,["id"=>$id_producto,"id_empresa"=>$id_empresa],["AND"]);
     }
+
+    public function crear($obj){
+        $productoModel = new ProductoModel();
+        return $productoModel->create($obj);
+    }
 }
 ?>
