@@ -59,7 +59,7 @@ function IniciarSesion() {
         var objUsuario = res;
         localStorage.setItem('Sesion',  JSON.stringify(objUsuario));
         window.location = 'Maqueta.html';
-        cargaMenu();
+        
 
 
     })
@@ -68,21 +68,3 @@ function IniciarSesion() {
 
 }
 
-function cargaMenu() {
- 
-    
-    fetch(gsUrlApi+"menu",{
-        method: 'GET',
-    })
-    .then(res=>res.json())
-    .then(res=>{
-
-
-        console.log(res);
-
-
-    })
-    .catch(res=>console.error(res));
-
-
-}

@@ -92,15 +92,16 @@ function consultarEmpresa() {
 function redireccionarVentana(objEvento, sUrl, sTitulo, sOpciones, sid_submenu) {
 
     var objContenedorMenu = $(objEvento).closest(".list-unstyled");
-    var iid_submenu = parseInt(sid_submenu);
-    var menu = sOpciones.split('|');
+    var id_submenu = parseInt(sid_submenu);
+    var lstOpciones = sOpciones.split('|');
 
-    var menuVentanaHab = [];
+    var lstOpcionesVentanaHab = [];
 
-    if (gObjSesion !== null && gObjSesion.lstOpcionFunciones) {
+    if (gObjSesion !== null && gObjSesion.opcion) {
 
-        menuVentanaHab = gObjSesion.lstOpcionFunciones.filter(function (obj) {
-            return obj.IdOpcion === iid_submenu;
+        lstOpcionesVentanaHab = gObjSesion.opcion.filter(function (obj) {
+            console.log(obj);
+            return obj.IdOpcion == id_submenu;
         });
 
     }
@@ -113,7 +114,7 @@ function redireccionarVentana(objEvento, sUrl, sTitulo, sOpciones, sid_submenu) 
 
     }
 
-    $("#h2_TituloPanelMaqueta").text(sTitulo);
+    //$("#h2_TituloPanelMaqueta").text(sTitulo);
     $("#div_btnOperaciones").find(".btn").addClass("cssOcultarObjeto");
     $("#div_btnOperaciones").find(".btn").unbind("click");
     $("#div_btnOperaciones").find(".btn").removeAttr("hab");
@@ -121,11 +122,13 @@ function redireccionarVentana(objEvento, sUrl, sTitulo, sOpciones, sid_submenu) 
     $("#div_btnOperaciones").find(".btn").attr("hab", "0");
 
     //mostrar botones
-    for (var i = 0; i < menu.length; i++) {
+    
+    for (var i = 0; i < lstOpciones.length; i++) {
+        console.log("lista botones ", lstOpciones[i]);
+       
+        if (lstOpciones[i] !== "") {
 
-        if (menu[i] !== "") {
-
-            var objBoton = $("#div_btnOperaciones").find(".btn[operacion='" + menu[i] + "']")[0];
+            var objBoton = $("#div_btnOperaciones").find(".btn[operacion='" + lstOpciones[i] + "']")[0];
 
             if (objBoton) {
 
@@ -139,11 +142,13 @@ function redireccionarVentana(objEvento, sUrl, sTitulo, sOpciones, sid_submenu) 
     }
 
     //hab botones
-    for (var i = 0; i < menuVentanaHab.length; i++) {
+    for (var i = 0; i < lstOpcionesVentanaHab.length; i++) {
 
-        if (menuVentanaHab[i].AccionesOpcion !== null && menuVentanaHab[i].AccionesOpcion) {
+        console.log("Hbilitar boton ", lstOpcionesVentanaHab[i]);
 
-            var sOpcion = $.trim(menuVentanaHab[i].AccionesOpcion.split('|')[1]);
+        if (lstOpcionesVentanaHab[i].AccionesOpcion !== null && lstOpcionesVentanaHab[i].AccionesOpcion) {
+
+            var sOpcion = $.trim(lstOpcionesVentanaHab[i].AccionesOpcion.split('|')[1]);
 
             if (sOpcion) {
 
@@ -160,22 +165,22 @@ function redireccionarVentana(objEvento, sUrl, sTitulo, sOpciones, sid_submenu) 
 
         if (sUrl.indexOf("?") === -1) {
 
-            sUrl = sUrl + "?IdUsuario=" + gObjSesion.user.IdUsuario + "&id_empresa=" + gObjSesion.user.id_empresa;
+            sUrl = sUrl + "?id=" + gObjSesion.user.id + "&id_empresa=" + gObjSesion.user.id_empresa;
 
         } else {
 
-            if (sUrl.indexOf("IdUsuario=") === -1) { //Agregar el QueryString IdUsuario si no esta en la url
+            if (sUrl.indexOf("id=") === -1) { 
 
-                sUrl = sUrl + "&IdUsuario=" + gObjSesion.user.IdUsuario;
+                sUrl = sUrl + "&id=" + gObjSesion.user.id;
 
             }
 
-            if (sUrl.indexOf("id_empresa=") === -1) { //Agregar el QueryString id_empresa si no esta en la url
+            if (sUrl.indexOf("id_empresa=") === -1) { 
 
 
                 sUrl = sUrl + "&id_empresa=" + gObjSesion.user.id_empresa;
 
-                sUrl = sUrl + "&IdEmpresa=" + gObjSesion.ObjLogin.id_empresa;
+                sUrl = sUrl + "&id_empresa=" + gObjSesion.ObjLogin.id_empresa;
 
 
             }
@@ -303,7 +308,7 @@ function cargarSubmenus(subMenus) {
 
                 if (item.activo) {
 
-                    sResult += '<li title="' + item.submenu_name + '" ><a onclick="redireccionarVentana(this,' + '\'' + item.ruta_formulario + '\',' + '\'' + item.submenu_name + '\',' + '\'' + item.acciones_submenu + '\',' + '\'' + item.id_submenu + '\')"><i class="' + item.submenu_icono + '"></i><span>' + item.submenu_name + '</span></a></li>';
+                    sResult += '<li title="' + item.submenu_name + '" ><a onclick="redireccionarVentana(this,' + '\'' + item.ruta_formulario + '\',' + '\'' + item.submenu_name + '\',' + '\'' + item.acciones + '\',' + '\'' + item.id_submenu + '\')"><i class="' + item.submenu_icono + '"></i><span>' + item.submenu_name + '</span></a></li>';
 
                 } else {
 
