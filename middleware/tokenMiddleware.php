@@ -19,10 +19,24 @@ class TokenMiddleware{
     }
 
     public static function getTokenRequest(){
-        if(isset(explode(" ",trim(getallheaders()["Authorization"]))[1])){
-            return (explode(" ",trim(getallheaders()["Authorization"]))[1]);
+        try{
+            
+            if(isset(getallheaders()["Authorization"])==0){
+                
+                return null;
+            }
+            else{
+                if(isset(explode(" ",trim(getallheaders()["Authorization"]))[1])){
+                    return (explode(" ",trim(getallheaders()["Authorization"]))[1]);
+                }
+                else{
+                    return null;
+                }
+            }
+            
         }
-        else{
+        catch(Exception $e){
+            echo "ERROR QUI";
             return null;
         }
     }
